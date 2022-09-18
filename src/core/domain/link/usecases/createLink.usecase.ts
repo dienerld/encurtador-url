@@ -1,6 +1,6 @@
-import { InvalidParamError } from '../../../errors/invalidParamError';
-import { RequiredParamError } from '../../../errors/requiredParamError';
-import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
+import { InvalidParamError } from '@core/errors/invalidParamError';
+import { RequiredParamError } from '@core/errors/requiredParamError';
+import { HttpResponse, IHttpResponse } from '@presentation/helpers/httpResponse';
 import { TInputLink } from '../link.interface';
 import { Link } from '../link.model';
 import { ILinkRepository } from '../linkRepository.interface';
