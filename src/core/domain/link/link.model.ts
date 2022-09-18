@@ -1,8 +1,8 @@
 import { createHash } from 'crypto';
 
 import { TInputLink } from './link.interface';
-import { RequiredParamError } from '@core/errors/requiredParamError';
-import { InvalidParamError } from '@core/errors/invalidParamError';
+import { RequiredParamError } from '@presentation/errors/requiredParamError';
+import { InvalidParamError } from '@presentation/errors';
 
 const DAYS_EXPIRES = 7;
 
@@ -33,7 +33,7 @@ class Link {
     }
 
     this.#fullUrl = link.fullUrl;
-    this.#expiresAt = link.expiresAt || setExpiresAt(DAYS_EXPIRES);
+    this.#expiresAt = link.expiresAt ? new Date(link.expiresAt) : setExpiresAt(DAYS_EXPIRES);
     this.#createdAt = new Date();
     this.#hits = 0;
 
@@ -68,6 +68,20 @@ class Link {
 
   set hits (hits: number) {
     this.#hits = hits;
+  }
+
+  isExpired (): boolean {
+    return this.#expiresAt < new Date();
+  }
+
+  toJSON () {
+    return {
+      fullUrl: this.fullUrl,
+      shortUrl: this.shortUrl,
+      createdAt: this.createdAt,
+      expiresAt: this.expiresAt,
+      hits: this.hits
+    };
   }
 }
 

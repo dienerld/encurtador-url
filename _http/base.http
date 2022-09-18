@@ -1,0 +1,21 @@
+@host = http://localhost
+
+GET {{host}}:{{$dotenv PORT}}/ HTTP/1.1
+Content-Type: application/json
+
+
+###
+
+POST {{host}}:{{$dotenv PORT}}/links HTTP/1.1
+Content-Type: application/json
+
+{
+  "fullUrl": "https://github.com/dienerld",
+  "shortUrl": "dienerld",
+  "expiresAt":"2022-09-20T22:37:07.079Z"
+}
+
+
+###
+
+GET {{host}}:{{$dotenv PORT}}/dienerld1 HTTP/1.1
