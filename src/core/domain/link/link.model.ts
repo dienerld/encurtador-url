@@ -1,10 +1,5 @@
 import { createHash } from 'crypto';
-
-type TCreateLink = {
-  fullUrl: string;
-  shortUrl?: string;
-  expiresAt?: Date;
-};
+import { TInputLink } from './link.interface';
 
 function setExpiresAt (days:number): Date {
   const ms = 1000;
@@ -23,7 +18,7 @@ class Link {
   #expiresAt: Date;
   #hits: number;
 
-  constructor (link: TCreateLink) {
+  constructor (link: TInputLink) {
     if (!link.fullUrl) {
       throw new Error('Full url is required');
     }
@@ -60,6 +55,10 @@ class Link {
 
   get hits (): number {
     return this.#hits;
+  }
+
+  set hits (hits: number) {
+    this.#hits = hits;
   }
 }
 

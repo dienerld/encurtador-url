@@ -9,8 +9,6 @@ describe('Create Link', () => {
       expiresAt
     });
 
-    console.log(link.expiresAt + '');
-
     expect(link.fullUrl).toBe('fullUrl');
     expect(link.shortUrl).toBe('shortUrl');
     expect(link.expiresAt).toBe(expiresAt);
