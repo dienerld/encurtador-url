@@ -49,4 +49,19 @@ describe('Create Link Use Case', () => {
     expect(response.shortUrl).toBe('shortUrl');
     expect(response.expiresAt).toBe(dateExpiresAt);
   });
+
+  it('create link without shortUrl params', async () => {
+    const { sut } = makeSut();
+    const dateExpiresAt = new Date();
+
+    const response = await sut.execute({
+      fullUrl: 'fullUrl',
+      expiresAt: dateExpiresAt
+    });
+
+    expect(response.fullUrl).toBe('fullUrl');
+    expect(response.expiresAt).toBe(dateExpiresAt);
+
+    expect(response.shortUrl).toBeTruthy();
+  });
 });
