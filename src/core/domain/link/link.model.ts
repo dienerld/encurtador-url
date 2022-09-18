@@ -1,7 +1,8 @@
 import { createHash } from 'crypto';
-import { InvalidParamError } from '../../errors/invalidParamError';
-import { RequiredParamError } from '../../errors/requiredParamError';
+
 import { TInputLink } from './link.interface';
+import { RequiredParamError } from '@core/errors/requiredParamError';
+import { InvalidParamError } from '@core/errors/invalidParamError';
 
 const DAYS_EXPIRES = 7;
 

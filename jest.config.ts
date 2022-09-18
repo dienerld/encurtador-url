@@ -8,11 +8,11 @@ export default {
 
   coverageProvider: 'v8',
 
+  roots: ['<rootDir>/src'],
   moduleNameMapper: {
-    '^@core/(.*)$': '<rootDir>/src/$1',
-    '^@infra/(.*)$': '<rootDir>/src/$1'
+    '@core/(.*)': '<rootDir>/src/core/$1',
+    '@infra/(.*)': '<rootDir>/src/infra/$1'
   },
-
   preset: 'ts-jest',
 
   testMatch: ['**/*.{test,spec}.ts'],
