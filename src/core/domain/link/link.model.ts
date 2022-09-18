@@ -22,6 +22,10 @@ class Link {
     if (!link.fullUrl) {
       throw new Error('Full url is required');
     }
+    // validar url com regex
+    if (!(/^(http|https):\/\/[^ "]+$/gi.test(link.fullUrl))) {
+      throw new Error('Full url is invalid');
+    }
 
     this.#fullUrl = link.fullUrl;
     this.#expiresAt = link.expiresAt || setExpiresAt(7);
