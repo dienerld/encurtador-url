@@ -83,7 +83,7 @@ describe('Create Link Use Case', () => {
     const { statusCode, body: response } = await sut.execute({});
 
     expect(statusCode).toBe(400);
-    expect(response).toBe('Full url is required');
+    expect(response).toBe('Required param: fullUrl');
   });
 
   it('create link with incorrect params', async () => {
@@ -93,6 +93,6 @@ describe('Create Link Use Case', () => {
     const { statusCode, body: response } = await sut.execute({ fullUrl: 1 });
 
     expect(statusCode).toBe(400);
-    expect(response).toBe('Full url is invalid');
+    expect(response).toBe('Invalid param: fullUrl');
   });
 });

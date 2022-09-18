@@ -1,5 +1,9 @@
 import { createHash } from 'crypto';
+import { InvalidParamError } from '../../errors/invalidParamError';
+import { RequiredParamError } from '../../errors/requiredParamError';
 import { TInputLink } from './link.interface';
+
+const DAYS_EXPIRES = 7;
 
 function setExpiresAt (days:number): Date {
   const ms = 1000;
@@ -20,15 +24,15 @@ class Link {
 
   constructor (link: TInputLink) {
     if (!link.fullUrl) {
-      throw new Error('Full url is required');
+      throw new RequiredParamError('fullUrl');
     }
     // validar url com regex
     if (!(/^(http|https):\/\/[^ "]+$/gi.test(link.fullUrl))) {
-      throw new Error('Full url is invalid');
+      throw new InvalidParamError('fullUrl');
     }
 
     this.#fullUrl = link.fullUrl;
-    this.#expiresAt = link.expiresAt || setExpiresAt(7);
+    this.#expiresAt = link.expiresAt || setExpiresAt(DAYS_EXPIRES);
     this.#createdAt = new Date();
     this.#hits = 0;
 

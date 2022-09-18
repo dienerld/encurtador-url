@@ -1,3 +1,5 @@
+import { InvalidParamError } from '../../../errors/invalidParamError';
+import { RequiredParamError } from '../../../errors/requiredParamError';
 import { HttpResponse, IHttpResponse } from '../../../presentation/helpers/httpResponse';
 import { TInputLink } from '../link.interface';
 import { Link } from '../link.model';
@@ -12,7 +14,10 @@ class CreateLinkUseCase {
       await this.linkRepository.save(link);
       return HttpResponse.created(link);
     } catch (err: any) {
-      return HttpResponse.badRequest(err.message);
+      if (err instanceof RequiredParamError || err instanceof InvalidParamError) {
+        return HttpResponse.badRequest(err.message);
+      }
+      return HttpResponse.serverError();
     }
   }
 }
