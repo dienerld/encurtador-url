@@ -5,17 +5,24 @@ class GetShortUrlUseCase {
   constructor (private readonly linkRepository: ILinkRepository) {}
 
   async execute (shortUrl: string): Promise<IHttpResponse> {
-    const link = await this.linkRepository.findByShortUrl(shortUrl);
+    try {
+      const link = await this.linkRepository.findByShortUrl(shortUrl);
 
-    if (!link) {
-      throw HttpResponse.notFound();
+      if (!link) {
+        return HttpResponse.notFound();
+      }
+
+      if (link.isExpired()) {
+        return HttpResponse.badRequest({ message: 'Link expired' });
+      }
+      await this.linkRepository.incrementHits(link);
+      return HttpResponse.ok(link);
+    } catch (err: any) {
+      if (err.isCustomError) {
+        return HttpResponse.badRequest(err);
+      }
+      return HttpResponse.serverError();
     }
-
-    if (link.isExpired()) {
-      throw HttpResponse.notFound();
-    }
-
-    return HttpResponse.ok(link);
   }
 }
 

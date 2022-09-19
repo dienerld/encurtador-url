@@ -11,11 +11,14 @@ Content-Type: application/json
 
 {
   "fullUrl": "https://github.com/dienerld",
-  "shortUrl": "dienerld",
-  "expiresAt":"2022-09-20T22:37:07.079Z"
+  "shortUrl": "dienerld1",
+  "expiresAt":"2022-01-17T22:37:07.079Z"
 }
 
 
 ###
-
 GET {{host}}:{{$dotenv PORT}}/dienerld1 HTTP/1.1
+
+
+###
+GET {{host}}:{{$dotenv PORT}}/dienerld1/stats HTTP/1.1

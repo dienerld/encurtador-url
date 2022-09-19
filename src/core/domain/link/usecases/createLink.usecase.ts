@@ -8,7 +8,6 @@ class CreateLinkUseCase {
   constructor (private readonly linkRepository: ILinkRepository) {}
 
   async execute ({ fullUrl, shortUrl, expiresAt }: TInputLink): Promise<IHttpResponse> {
-    console.log('CreateLinkUseCase.execute');
     try {
       const shortUrlAlreadyExistes = shortUrl
         ? await this.linkRepository.findByShortUrl(shortUrl)

@@ -1,5 +1,6 @@
 import { CreateLinkUseCase } from '@domain/link/usecases/createLink.usecase';
 import { GetShortUrlUseCase } from '@domain/link/usecases/getShortUrl.usecase';
+import { GetStatsUrlUseCase } from '@domain/link/usecases/getStatsUrrl.usecase';
 import { LinkRepository } from '@infra/database/in-memory';
 import { Router } from 'express';
 
@@ -8,6 +9,7 @@ const routes = Router();
 const repository = new LinkRepository();
 const createLinkUseCase = new CreateLinkUseCase(repository);
 const getShortUrlUseCase = new GetShortUrlUseCase(repository);
+const getStatsUrlUseCase = new GetStatsUrlUseCase(repository);
 
 routes.get('/', (_, response) => response.json({ message: 'Hello World' }));
 
@@ -28,8 +30,18 @@ routes.get('/:shortUrl', async (request, response) => {
   const { shortUrl } = request.params;
 
   const { body, statusCode } = await getShortUrlUseCase.execute(shortUrl);
-
-  return response.status(statusCode).redirect(body.fullUrl);
+  if (statusCode === 200) {
+    return response.status(statusCode).redirect(body.fullUrl);
+  }
+  return response.status(statusCode).json(body);
 });
 
 export { routes };
+
+routes.get('/:shortUrl/stats', async (request, response) => {
+  const { shortUrl } = request.params;
+
+  const { body, statusCode } = await getStatsUrlUseCase.execute(shortUrl);
+
+  return response.status(statusCode).json(body);
+});
